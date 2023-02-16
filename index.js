@@ -1,6 +1,6 @@
 const { clean, build } = require('./script')
 const { lint } = require('./validates')
-const { redFont, yellowFont } = require('./utils')
+const { redFont } = require('./utils')
 const action = process.argv[2]
 const net = process.argv[3]
 
