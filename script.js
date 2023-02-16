@@ -161,7 +161,7 @@ async function getCreateTimeFromGit(dirPath) {
   const command =
     'git log --diff-filter=A --follow --format=%aD -- [path] | tail -1'
   return new Promise((resolve, reject) => {
-    exec(command.replace('[path]', dirPath), (err, stdout, stderr) => {
+    exec(command.replace('[path]', `${dirPath}/info.json`), (err, stdout, stderr) => {
       if (err) return reject(err)
       if (stderr) return reject(stderr)
       if (!stdout)
