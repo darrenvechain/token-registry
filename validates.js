@@ -1,5 +1,5 @@
 const path = require('path')
-const fs = require()
+const fs = require('fs')
 const axios = require('axios')
 const file = require('file-system')
 const sharp = require('sharp')
