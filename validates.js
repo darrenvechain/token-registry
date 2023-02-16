@@ -61,10 +61,10 @@ async function checkImg(path) {
   }
 }
 
-async function validate(net, address) {
+async function validate(net, type, address) {
   const tokenFolder = path.join(
     __dirname,
-    `./tokens/${NET_FOLDERS[net]}/${address}`
+    `./tokens/${type}/${NET_FOLDERS[net]}/${address}`
   )
   const info = require(path.join(tokenFolder, 'info.json'))
   try {
@@ -85,13 +85,13 @@ async function validate(net, address) {
 }
 
 module.exports = {
-  lint: async function (net) {
+  lint: async function (net, type) {
     const tokens = getTokens(
-      path.join(__dirname, `./tokens/${NET_FOLDERS[net]}`)
+      path.join(__dirname, `./tokens/${type}/${NET_FOLDERS[net]}`)
     )
     for (let i = 0; i < tokens.length; i++) {
       const item = tokens[i]
-      await validate(net, item)
+      await validate(net, type, item)
     }
   }
 }

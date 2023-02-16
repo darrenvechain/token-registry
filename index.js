@@ -1,18 +1,18 @@
 const { clean, build } = require('./script')
 const { lint } = require('./validates')
-const { redFont } = require('./utils')
+const { redFont, yellowFont } = require('./utils')
 const action = process.argv[2]
 const net = process.argv[3]
 
 async function buildAll() {
   await clean()
-  await build('main')
-  await build('test')
+  await build('main', 'fungible')
+  await build('test', 'fungible')
 }
 
 async function lintAll() {
-  await lint('main')
-  await lint('test')
+  await lint('main', 'fungible')
+  await lint('test', 'fungible')
 }
 
 async function execFun(net) {
@@ -20,7 +20,7 @@ async function execFun(net) {
     if (net === 'all') {
       await lintAll()
     } else {
-      await lint(net)
+      await lint(net, 'fungible')
     }
   } else if (action === '-b') {
     if (net === 'all') {
@@ -28,8 +28,8 @@ async function execFun(net) {
       await buildAll()
     } else {
       clean()
-      await lint(net)
-      await build(net)
+      await lint(net, 'fungible')
+      await build(net, 'fungible')
     }
   }
 }
