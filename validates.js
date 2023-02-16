@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require()
 const axios = require('axios')
 const file = require('file-system')
 const sharp = require('sharp')
@@ -84,6 +85,25 @@ async function validate(net, type, address) {
   }
 }
 
+function checkForDuplicateAddresses(net) {
+
+  const fungibleTokens = fs.readdirSync(path.join(__dirname, `./tokens/fungible/${NET_FOLDERS[net]}`))
+  const nonFungibleTokens = fs.readdirSync(path.join(__dirname, `./tokens/non-fungible/${NET_FOLDERS[net]}`))
+
+  for (const token of fungibleTokens) {
+    if (nonFungibleTokens.includes(token)) {
+      throw new Error(`Duplicate token address ${token} found in fungible and non-fungible folders`)
+    }
+  }
+
+  for (const token of nonFungibleTokens) {
+    if (fungibleTokens.includes(token)) {
+      throw new Error(`Duplicate token address ${token} found in fungible and non-fungible folders`)
+    }
+  }
+
+}
+
 module.exports = {
   lint: async function (net, type) {
     const tokens = getTokens(
@@ -93,5 +113,6 @@ module.exports = {
       const item = tokens[i]
       await validate(net, type, item)
     }
-  }
+  },
+  checkForDuplicateAddresses: checkForDuplicateAddresses
 }

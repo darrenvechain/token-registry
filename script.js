@@ -7,6 +7,7 @@ const { exec } = require('child_process')
 const BN = require('bignumber.js')
 const { abi } = require('thor-devkit')
 const { getTokens, redFont, greenFont, yellowFont } = require('./utils')
+const { checkForDuplicateAddresses } = require('./validates')
 
 const { NETS: NET_FOLDERS, NODES } = require('./const')
 
@@ -31,6 +32,8 @@ const clear = () => {
 
 async function packToken(net, type) {
   console.time(greenFont(`build-${net}-${type}-tokens`))
+
+  checkForDuplicateAddresses(net)
 
   const folder = path.join(__dirname, `./tokens/${type}/${NET_FOLDERS[net]}`)
   const infos = await getTokensInfo(folder)
