@@ -29,10 +29,10 @@ const clear = () => {
   console.timeEnd(greenFont('clean'))
 }
 
-async function packToken(net) {
-  console.time(greenFont(`build-${net}-tokens`))
+async function packToken(net, type) {
+  console.time(greenFont(`build-${net}-${type}-tokens`))
 
-  const folder = path.join(__dirname, `./tokens/${NET_FOLDERS[net]}`)
+  const folder = path.join(__dirname, `./tokens/${type}/${NET_FOLDERS[net]}`)
   const infos = await getTokensInfo(folder)
   let result = []
   const listJson = infos
